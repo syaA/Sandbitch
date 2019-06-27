@@ -58,7 +58,7 @@ class GameScene: SKScene {
         //self.crush = SKAction(named: "Crush")
         // パンチするアニメーション、振り下したときに攻撃フラグを立てる
         self.crush = SKAction.sequence([SKAction.moveBy(x: 0, y: 100, duration: 1.0),
-                                        SKAction.group([SKAction.moveBy(x: 0, y: -250, duration: 0.1),
+                                        SKAction.group([SKAction.moveBy(x: 0, y: -250, duration: 0.2),
                                                         SKAction.playSoundFileNamed("punch", waitForCompletion: false),
                                                         SKAction.customAction(withDuration: 0) {
                                                             n, t in
@@ -69,6 +69,7 @@ class GameScene: SKScene {
                                             self.hammer_attacking = false
                                         },
                                         SKAction.moveBy(x: 0, y: 150, duration: 2.0)])
+        self.crush!.speed = 2
         self.crush_effect = SKEmitterNode(fileNamed: "Crush")
         //　ギャル
         self.gal_a = self.childNode(withName: "//gal_a") as? SKSpriteNode
@@ -136,13 +137,13 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // 一定時間ごとにギャル生成
-        if (currentTime - prev_gal_time) > TimeInterval.random(in: 3.0...5.0) {
-            let type = Int.random(in: 0...2)
+        if (currentTime - prev_gal_time) > TimeInterval.random(in: 0.2...1.0) {
+            let type = Int.random(in: 0...10)
             let gal_base : SKSpriteNode?
             switch type {
-            case 0: gal_base = self.gal_a
-            case 1: gal_base = self.gal_b
-            case 2: gal_base = self.gal_c
+            case 0...4: gal_base = self.gal_a
+            case 5...8: gal_base = self.gal_b
+            case 9...10: gal_base = self.gal_c
             default: gal_base = nil
             }
             let gal = gal_base!.copy() as! SKSpriteNode
@@ -195,10 +196,16 @@ class GameScene: SKScene {
                     self.score_label!.text = "Score: \(self.score)"
                     gal.userData?["score"] = 0  // 一度潰したらもう点は入らない
                     // スコアを表示
-                    let flow_score = score_label!.copy() as! SKLabelNode
-                    flow_score.text = "\(score)"
+                    let flow_score = SKLabelNode()
                     flow_score.position = gal.position
                     flow_score.zPosition = 15
+                    let attr : [NSAttributedString.Key : Any] = [
+                        .font : UIFont.systemFont(ofSize: 24),
+                        .foregroundColor : (score < 0 ? UIColor.red : UIColor.white),
+                        .strokeColor : UIColor.black,
+                        .strokeWidth : -3.0,
+                    ]
+                    flow_score.attributedText = NSAttributedString(string: "\(score)", attributes: attr)
                     flow_score.run(SKAction(named: "Flow")!) {
                         flow_score.removeFromParent()
                     }
