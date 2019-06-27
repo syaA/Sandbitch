@@ -26,12 +26,14 @@ class GameScene: SKScene {
     private var collapse : SKAction?
 
     private var score_label : SKLabelNode?
+    private var time_label : SKLabelNode?
     
     private var gals : [SKSpriteNode] = []
     private var prev_gal_time : TimeInterval = 0
     private var hammer_attacking : Bool = false
     
     private var score = 0
+    private let startTime = Date()
     
     private var debug = false
     
@@ -87,6 +89,9 @@ class GameScene: SKScene {
         // スコア
         self.score_label = self.childNode(withName: "//score") as? SKLabelNode
         self.score_label!.text = "Score: \(self.score)"
+        
+        // 時間
+        self.time_label = self.childNode(withName: "//time") as? SKLabelNode
     }
     
     
@@ -136,6 +141,18 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        // 残り時間
+        let elapsed = Date().timeIntervalSince(self.startTime)
+        self.time_label!.text = "Time: \(60 - Int(elapsed) % 60)"
+        if (elapsed > 60) {
+            // 時間切れで結果画面へ   
+            if let view = self.view {
+                if let scene = SKScene(fileNamed: "ResultScene") {
+                    scene.scaleMode = .aspectFill
+                    view.presentScene(scene)
+                }
+            }
+        }
         // 一定時間ごとにギャル生成
         if (currentTime - prev_gal_time) > TimeInterval.random(in: 0.2...1.0) {
             let type = Int.random(in: 0...10)
