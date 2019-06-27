@@ -9,6 +9,16 @@
 import SpriteKit
 import GameplayKit
 
+struct ResultInfo {
+    var gal_a_num = 0
+    var gal_b_num = 0
+    var gal_c_num = 0
+    var gal_a_score = 0
+    var gal_b_score = 0
+    var gal_c_score = 0
+    var score = 0
+}
+
 class GameScene: SKScene {
     
     private var belt : SKSpriteNode?
@@ -26,12 +36,15 @@ class GameScene: SKScene {
     private var collapse : SKAction?
 
     private var score_label : SKLabelNode?
+    private var time_label : SKLabelNode?
     
     private var gals : [SKSpriteNode] = []
     private var prev_gal_time : TimeInterval = 0
     private var hammer_attacking : Bool = false
     
     private var score = 0
+    private let startTime = Date()
+    private var result : ResultInfo!
     
     private var debug = false
     
@@ -87,6 +100,12 @@ class GameScene: SKScene {
         // スコア
         self.score_label = self.childNode(withName: "//score") as? SKLabelNode
         self.score_label!.text = "Score: \(self.score)"
+        
+        // 時間
+        self.time_label = self.childNode(withName: "//time") as? SKLabelNode
+        
+        // 結果
+        self.result = ResultInfo()
     }
     
     
@@ -136,6 +155,19 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        // 残り時間
+        let elapsed = Date().timeIntervalSince(self.startTime)
+        self.time_label!.text = "Time: \(60 - Int(elapsed) % 60)"
+        if (elapsed > 60) {
+            // 時間切れで結果画面へ   
+            if let view = self.view {
+                if let scene = SKScene(fileNamed: "ResultScene") as? ResultScene {
+                    scene.scaleMode = .aspectFill
+                    scene.result = self.result
+                    view.presentScene(scene)
+                }
+            }
+        }
         // 一定時間ごとにギャル生成
         if (currentTime - prev_gal_time) > TimeInterval.random(in: 0.2...1.0) {
             let type = Int.random(in: 0...10)
@@ -194,6 +226,14 @@ class GameScene: SKScene {
                     }
                     self.score += score
                     self.score_label!.text = "Score: \(self.score)"
+                    
+                    switch gal.name {
+                    case "gal_a": self.result.gal_a_num += 1; self.result.gal_a_score += score
+                    case "gal_b": self.result.gal_b_num += 1; self.result.gal_b_score += score
+                    case "gal_c": self.result.gal_c_num += 1; self.result.gal_c_score += score
+                    default: break
+                    }
+                    self.result.score = self.score
                     gal.userData?["score"] = 0  // 一度潰したらもう点は入らない
                     // スコアを表示
                     let flow_score = SKLabelNode()

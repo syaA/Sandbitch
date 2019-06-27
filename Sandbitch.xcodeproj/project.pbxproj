@@ -33,6 +33,9 @@
 		39E16DA022BFB2EF00608727 /* Crush.sks in Resources */ = {isa = PBXBuildFile; fileRef = 39E16D9F22BFB2EF00608727 /* Crush.sks */; };
 		39E16DA222BFC4BF00608727 /* gutya.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DA122BFC4BF00608727 /* gutya.mp3 */; };
 		39E16DA422BFC73400608727 /* punch.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DA322BFC73400608727 /* punch.mp3 */; };
+		39E16DA622C4FC0600608727 /* ResultScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DA522C4FC0600608727 /* ResultScene.sks */; };
+		39E16DAA22C4FC4700608727 /* ResultScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E16DA922C4FC4700608727 /* ResultScene.swift */; };
+		39E16DAC22C4FEEF00608727 /* result.png in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DAB22C4FEEF00608727 /* result.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +67,9 @@
 		39E16D9F22BFB2EF00608727 /* Crush.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Crush.sks; sourceTree = "<group>"; };
 		39E16DA122BFC4BF00608727 /* gutya.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gutya.mp3; sourceTree = "<group>"; };
 		39E16DA322BFC73400608727 /* punch.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = punch.mp3; sourceTree = "<group>"; };
+		39E16DA522C4FC0600608727 /* ResultScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ResultScene.sks; sourceTree = "<group>"; };
+		39E16DA922C4FC4700608727 /* ResultScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultScene.swift; sourceTree = "<group>"; };
+		39E16DAB22C4FEEF00608727 /* result.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = result.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +104,11 @@
 			isa = PBXGroup;
 			children = (
 				395772B622B7CFD7001F087E /* AppDelegate.swift */,
-				395772B822B7CFD7001F087E /* GameScene.sks */,
 				395772BA22B7CFD7001F087E /* Actions.sks */,
+				395772B822B7CFD7001F087E /* GameScene.sks */,
 				395772BC22B7CFD7001F087E /* GameScene.swift */,
+				39E16DA522C4FC0600608727 /* ResultScene.sks */,
+				39E16DA922C4FC4700608727 /* ResultScene.swift */,
 				395772EB22BE4B3A001F087E /* TitleScene.swift */,
 				395772BE22B7CFD7001F087E /* GameViewController.swift */,
 				395772C022B7CFD7001F087E /* Main.storyboard */,
@@ -116,6 +124,7 @@
 		395772CE22BE278F001F087E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				39E16DAB22C4FEEF00608727 /* result.png */,
 				39E16DA322BFC73400608727 /* punch.mp3 */,
 				39E16DA122BFC4BF00608727 /* gutya.mp3 */,
 				39E16D9B22BFAF9900608727 /* shinnen_aisatsu_woman.png */,
@@ -201,6 +210,7 @@
 				395772E622BE4672001F087E /* title_logo.png in Resources */,
 				39E16D9C22BFAF9900608727 /* shinnen_aisatsu_woman.png in Resources */,
 				395772EE22BF33F7001F087E /* bg_kaitenzushi_empty.png in Resources */,
+				39E16DA622C4FC0600608727 /* ResultScene.sks in Resources */,
 				395772B922B7CFD7001F087E /* GameScene.sks in Resources */,
 				395772DA22BE3D9A001F087E /* fashion_wafuku_woman.png in Resources */,
 				395772DC22BE3DAB001F087E /* gal.png in Resources */,
@@ -212,6 +222,7 @@
 				395772E022BE413B001F087E /* figure_tekken1_seigi2.png in Resources */,
 				39E16DA422BFC73400608727 /* punch.mp3 in Resources */,
 				395772E822BE499C001F087E /* tap_to_start.png in Resources */,
+				39E16DAC22C4FEEF00608727 /* result.png in Resources */,
 				395772D022BE3CC7001F087E /* animal_gorilla.png in Resources */,
 				395772BB22B7CFD7001F087E /* Actions.sks in Resources */,
 				395772D822BE3D88001F087E /* cooking_nikutataki.png in Resources */,
@@ -228,6 +239,7 @@
 				395772BD22B7CFD7001F087E /* GameScene.swift in Sources */,
 				395772BF22B7CFD7001F087E /* GameViewController.swift in Sources */,
 				395772B722B7CFD7001F087E /* AppDelegate.swift in Sources */,
+				39E16DAA22C4FC4700608727 /* ResultScene.swift in Sources */,
 				395772EC22BE4B3A001F087E /* TitleScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
