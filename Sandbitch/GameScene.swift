@@ -9,6 +9,16 @@
 import SpriteKit
 import GameplayKit
 
+struct ResultInfo {
+    var gal_a_num = 0
+    var gal_b_num = 0
+    var gal_c_num = 0
+    var gal_a_score = 0
+    var gal_b_score = 0
+    var gal_c_score = 0
+    var score = 0
+}
+
 class GameScene: SKScene {
     
     private var belt : SKSpriteNode?
@@ -34,6 +44,7 @@ class GameScene: SKScene {
     
     private var score = 0
     private let startTime = Date()
+    private var result : ResultInfo!
     
     private var debug = false
     
@@ -92,6 +103,9 @@ class GameScene: SKScene {
         
         // 時間
         self.time_label = self.childNode(withName: "//time") as? SKLabelNode
+        
+        // 結果
+        self.result = ResultInfo()
     }
     
     
@@ -147,8 +161,9 @@ class GameScene: SKScene {
         if (elapsed > 60) {
             // 時間切れで結果画面へ   
             if let view = self.view {
-                if let scene = SKScene(fileNamed: "ResultScene") {
+                if let scene = SKScene(fileNamed: "ResultScene") as? ResultScene {
                     scene.scaleMode = .aspectFill
+                    scene.result = self.result
                     view.presentScene(scene)
                 }
             }
@@ -211,6 +226,14 @@ class GameScene: SKScene {
                     }
                     self.score += score
                     self.score_label!.text = "Score: \(self.score)"
+                    
+                    switch gal.name {
+                    case "gal_a": self.result.gal_a_num += 1; self.result.gal_a_score += score
+                    case "gal_b": self.result.gal_b_num += 1; self.result.gal_b_score += score
+                    case "gal_c": self.result.gal_c_num += 1; self.result.gal_c_score += score
+                    default: break
+                    }
+                    self.result.score = self.score
                     gal.userData?["score"] = 0  // 一度潰したらもう点は入らない
                     // スコアを表示
                     let flow_score = SKLabelNode()
