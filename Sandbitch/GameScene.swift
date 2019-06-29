@@ -106,16 +106,18 @@ class GameScene: SKScene {
         
         // 結果
         self.result = ResultInfo()
+        
+        // スキルボタン
+        let skill_main = SkillButtonNode(name: "skill_main",
+                                         texture: SKTexture(imageNamed: "figure_tekken7_blank2.png"),
+                                         size: CGSize(width: 80, height: 80))
+        skill_main?.position = CGPoint(x:268, y:-62)
+        skill_main?.zPosition = 10
+        self.addChild(skill_main!)
     }
     
     
     func touchDown(atPoint pos : CGPoint) {
-        // タッチでハンマーを動かす
-        if let hammer = self.hammer {
-            if !hammer.hasActions() {
-                hammer.run(self.crush!)
-            }
-        }
     }
     
     func touchMoved(toPoint pos : CGPoint) {
@@ -129,7 +131,16 @@ class GameScene: SKScene {
         for t in touches {
             let loc = t.location(in: self)
             let node = self.atPoint(loc)
-            if node.name == "return" {
+            switch node.name {
+            case "skill_main":
+                // メインスキルボタンでハンマーを動かす
+                if let hammer = self.hammer {
+                    if !hammer.hasActions() {
+                        hammer.run(self.crush!)
+                    }
+                }
+            case "return":
+                //　戻るボタンが押されたらタイトルへ
                 if let view = self.view {
                     if let scene = SKScene(fileNamed: "TitleScene") {
                         scene.scaleMode = .aspectFill
@@ -137,6 +148,7 @@ class GameScene: SKScene {
                         return
                     }
                 }
+            default: break
             }
         }
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }

@@ -36,6 +36,8 @@
 		39E16DA622C4FC0600608727 /* ResultScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DA522C4FC0600608727 /* ResultScene.sks */; };
 		39E16DAA22C4FC4700608727 /* ResultScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E16DA922C4FC4700608727 /* ResultScene.swift */; };
 		39E16DAC22C4FEEF00608727 /* result.png in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DAB22C4FEEF00608727 /* result.png */; };
+		39E16DAE22C79C2400608727 /* SkillButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E16DAD22C79C2400608727 /* SkillButtonNode.swift */; };
+		39E16DB022C79E5F00608727 /* figure_tekken7_blank2.png in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DAF22C79E5F00608727 /* figure_tekken7_blank2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +72,8 @@
 		39E16DA522C4FC0600608727 /* ResultScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ResultScene.sks; sourceTree = "<group>"; };
 		39E16DA922C4FC4700608727 /* ResultScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultScene.swift; sourceTree = "<group>"; };
 		39E16DAB22C4FEEF00608727 /* result.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = result.png; sourceTree = "<group>"; };
+		39E16DAD22C79C2400608727 /* SkillButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillButtonNode.swift; sourceTree = "<group>"; };
+		39E16DAF22C79E5F00608727 /* figure_tekken7_blank2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = figure_tekken7_blank2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,7 @@
 				395772C522B7CFD8001F087E /* LaunchScreen.storyboard */,
 				395772C822B7CFD8001F087E /* Info.plist */,
 				39E16D9F22BFB2EF00608727 /* Crush.sks */,
+				39E16DAD22C79C2400608727 /* SkillButtonNode.swift */,
 			);
 			path = Sandbitch;
 			sourceTree = "<group>";
@@ -124,6 +129,7 @@
 		395772CE22BE278F001F087E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				39E16DAF22C79E5F00608727 /* figure_tekken7_blank2.png */,
 				39E16DAB22C4FEEF00608727 /* result.png */,
 				39E16DA322BFC73400608727 /* punch.mp3 */,
 				39E16DA122BFC4BF00608727 /* gutya.mp3 */,
@@ -209,6 +215,7 @@
 				395772C222B7CFD7001F087E /* Main.storyboard in Resources */,
 				395772E622BE4672001F087E /* title_logo.png in Resources */,
 				39E16D9C22BFAF9900608727 /* shinnen_aisatsu_woman.png in Resources */,
+				39E16DB022C79E5F00608727 /* figure_tekken7_blank2.png in Resources */,
 				395772EE22BF33F7001F087E /* bg_kaitenzushi_empty.png in Resources */,
 				39E16DA622C4FC0600608727 /* ResultScene.sks in Resources */,
 				395772B922B7CFD7001F087E /* GameScene.sks in Resources */,
@@ -241,6 +248,7 @@
 				395772B722B7CFD7001F087E /* AppDelegate.swift in Sources */,
 				39E16DAA22C4FC4700608727 /* ResultScene.swift in Sources */,
 				395772EC22BE4B3A001F087E /* TitleScene.swift in Sources */,
+				39E16DAE22C79C2400608727 /* SkillButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
