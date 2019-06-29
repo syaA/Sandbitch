@@ -24,6 +24,7 @@ class ResultScene: SKScene {
         let gal_b_score = self.childNode(withName: "//gal_b_score") as! SKLabelNode
         let gal_c_score = self.childNode(withName: "//gal_c_score") as! SKLabelNode
         let total_score = self.childNode(withName: "//total_score") as! SKLabelNode
+        let return_btn = self.childNode(withName: "return") as! SKSpriteNode
         
         gal_a_num.text = "\(result!.gal_a_num)"
         gal_b_num.text = "\(result!.gal_b_num)"
@@ -43,6 +44,7 @@ class ResultScene: SKScene {
         gal_b_score.alpha = 0
         gal_c_score.alpha = 0
         total_score.alpha = 0
+        return_btn.alpha = 0
       
         gal_a.position.y -= 160
         gal_b.position.y -= 160
@@ -74,22 +76,29 @@ class ResultScene: SKScene {
                                                                        SKAction.scale(by: 0.8, duration: 1)]),
                                                        SKAction.group([SKAction.scale(by: 1.2, duration: 0.1),
                                                                        SKAction.fadeAlpha(to: 1, duration: 0.1)]),
-                                                       SKAction.scale(by: 0.8, duration: 0.1)]))
+                                                       SKAction.scale(by: 0.8, duration: 0.1)])) {
+                                                        return_btn.run(SKAction.fadeIn(withDuration: 0.5))
+                    }
                 }
             }
         }
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let view = self.view {
-            if let scene = SKScene(fileNamed: "TitleScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
+        // 戻るボタンが押されたらタイトルへ
+        for t in touches {
+            let loc = t.location(in: self)
+            let node = self.atPoint(loc)
+            if node.name == "return" {
+                if let view = self.view {
+                    if let scene = SKScene(fileNamed: "TitleScene") {
+                        scene.scaleMode = .aspectFill
+                        view.presentScene(scene)
+                        return
+                    }
+                }
             }
         }
     }
+
 }
