@@ -26,10 +26,10 @@ class ProgressPassShapeNode : SKShapeNode {
         ]
         return shader
     }()
-    var progress : Float = 0.0 {
+    var progress : Double = 0.0 {
         willSet {
             //self.setValue(SKAttributeValue(float: newValue), forAttribute: "a_progress")
-            self.strokeShader?.uniformNamed("u_progress")?.floatValue = newValue
+            self.strokeShader?.uniformNamed("u_progress")?.floatValue = Float(newValue)
         }
     }
     

@@ -42,6 +42,8 @@ class GameScene: SKScene {
     private var prev_gal_time : TimeInterval = 0
     private var hammer_attacking : Bool = false
     
+    private var skill_main : SkillButtonNode?
+    
     private var score = 0
     private let startTime = Date()
     private var result : ResultInfo!
@@ -108,12 +110,20 @@ class GameScene: SKScene {
         self.result = ResultInfo()
         
         // スキルボタン
-        let skill_main = SkillButtonNode(name: "skill_main",
-                                         texture: SKTexture(imageNamed: "figure_tekken7_blank2.png"),
-                                         size: CGSize(width: 80, height: 80))
-        skill_main?.position = CGPoint(x:268, y:-62)
-        skill_main?.zPosition = 10
-        self.addChild(skill_main!)
+        self.skill_main = SkillButtonNode(
+            texture: SKTexture(imageNamed: "figure_tekken7_blank2.png"),
+            size: CGSize(width: 80, height: 80))
+        self.skill_main?.position = CGPoint(x:268, y:-62)
+        self.skill_main?.zPosition = 10
+        self.skill_main?.interval = 2.1
+        self.skill_main?.onTriggered = {
+            // メインスキルボタンでハンマーを動かす
+            if let hammer = self.hammer {
+                hammer.removeAllActions()
+                hammer.run(self.crush!)
+            }
+        }
+        self.addChild(self.skill_main!)
     }
     
     
@@ -132,13 +142,6 @@ class GameScene: SKScene {
             let loc = t.location(in: self)
             let node = self.atPoint(loc)
             switch node.name {
-            case "skill_main":
-                // メインスキルボタンでハンマーを動かす
-                if let hammer = self.hammer {
-                    if !hammer.hasActions() {
-                        hammer.run(self.crush!)
-                    }
-                }
             case "return":
                 //　戻るボタンが押されたらタイトルへ
                 if let view = self.view {
@@ -265,6 +268,8 @@ class GameScene: SKScene {
                 }
             }
         }
+        
+        self.skill_main?.update(currentTime)
         
         if self.debug {
             if let hammer = self.hammer {
