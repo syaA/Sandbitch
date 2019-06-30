@@ -163,8 +163,9 @@ class GameScene: SKScene {
             self.genocide_r!.zPosition = -15
             self.genocide_body!.position.y = 11 - 600
             self.genocide_body!.run(
-                SKAction.sequence([SKAction.moveBy(x: 0, y: 600, duration: 3.0),
-                                   SKAction.wait(forDuration: 1.0)])) {
+                SKAction.sequence([SKAction.group([SKAction.moveBy(x: 0, y: 600, duration: 3.0),
+                                                   SKAction.playSoundFileNamed("gogogo.mp3", waitForCompletion: false)]),
+                                   SKAction.group([SKAction.wait(forDuration: 1.0), SKAction.stop()])])) {
                                     self.genocide_l!.run(SKAction.moveBy(x: 400, y: 0, duration: 1)) {
                                         self.genocide_l!.zPosition = 16
                                         self.genocide_attaking = true
