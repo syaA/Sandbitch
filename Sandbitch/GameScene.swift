@@ -30,6 +30,10 @@ class GameScene: SKScene {
     private var crush : SKAction?
     private var crush_effect : SKEmitterNode?
     
+    private var genocide_body : SKSpriteNode?
+    private var genocide_l : SKSpriteNode?
+    private var genocide_r : SKSpriteNode?
+    
     private var gal_a : SKSpriteNode?
     private var gal_b : SKSpriteNode?
     private var gal_c : SKSpriteNode?
@@ -43,6 +47,7 @@ class GameScene: SKScene {
     private var hammer_attacking : Bool = false
     
     private var skill_main : SkillButtonNode?
+    private var skill_genocide : SkillButtonNode?
     
     private var score = 0
     private let startTime = Date()
@@ -86,6 +91,15 @@ class GameScene: SKScene {
                                         SKAction.moveBy(x: 0, y: 150, duration: 2.0)])
         self.crush!.speed = 2
         self.crush_effect = SKEmitterNode(fileNamed: "Crush")
+        
+        // ジェノサイド
+        self.genocide_body = self.childNode(withName: "genocide_body") as? SKSpriteNode
+        self.genocide_l = self.genocide_body!.childNode(withName: "genocide_l") as? SKSpriteNode
+        self.genocide_r = self.genocide_body!.childNode(withName: "genocide_r") as? SKSpriteNode
+        self.genocide_body!.alpha = 0
+        self.genocide_l!.alpha = 0
+        self.genocide_r!.alpha = 0
+        
         //　ギャル
         self.gal_a = self.childNode(withName: "//gal_a") as? SKSpriteNode
         self.gal_a?.childNode(withName: "damage")?.alpha = 0
@@ -124,6 +138,17 @@ class GameScene: SKScene {
             }
         }
         self.addChild(self.skill_main!)
+        
+        self.skill_genocide = SkillButtonNode(
+            texture: SKTexture(imageNamed: "omairi_kimono_woman.png"),
+            size: CGSize(width: 40, height: 40))
+        self.skill_genocide?.position = CGPoint(x:208, y:-22)
+        self.skill_genocide?.zPosition = 10
+        self.skill_genocide?.interval = 10.0
+        self.skill_genocide?.onTriggered = {
+            
+        }
+        self.addChild(self.skill_genocide!)
     }
     
     
@@ -270,6 +295,7 @@ class GameScene: SKScene {
         }
         
         self.skill_main?.update(currentTime)
+        self.skill_genocide?.update(currentTime)
         
         if self.debug {
             if let hammer = self.hammer {

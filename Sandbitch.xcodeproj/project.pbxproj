@@ -40,6 +40,10 @@
 		39E16DB022C79E5F00608727 /* figure_tekken7_blank2.png in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DAF22C79E5F00608727 /* figure_tekken7_blank2.png */; };
 		39E16DB422C841B000608727 /* ProgressPassShapeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E16DB322C841B000608727 /* ProgressPassShapeNode.swift */; };
 		39E16DB622C868BA00608727 /* ProgressPassShader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DB522C868BA00608727 /* ProgressPassShader.fsh */; };
+		39E16DBB22C8AAC700608727 /* genocide_l.png in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DB922C8AAC700608727 /* genocide_l.png */; };
+		39E16DBC22C8AAC700608727 /* genocide_r.png in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DBA22C8AAC700608727 /* genocide_r.png */; };
+		39E16DBE22C8AD7100608727 /* genocide_body.png in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DBD22C8AD7100608727 /* genocide_body.png */; };
+		39E16DC022C8B46400608727 /* omairi_kimono_woman.png in Resources */ = {isa = PBXBuildFile; fileRef = 39E16DBF22C8B46400608727 /* omairi_kimono_woman.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +82,10 @@
 		39E16DAF22C79E5F00608727 /* figure_tekken7_blank2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = figure_tekken7_blank2.png; sourceTree = "<group>"; };
 		39E16DB322C841B000608727 /* ProgressPassShapeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPassShapeNode.swift; sourceTree = "<group>"; };
 		39E16DB522C868BA00608727 /* ProgressPassShader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = ProgressPassShader.fsh; sourceTree = "<group>"; };
+		39E16DB922C8AAC700608727 /* genocide_l.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = genocide_l.png; sourceTree = "<group>"; };
+		39E16DBA22C8AAC700608727 /* genocide_r.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = genocide_r.png; sourceTree = "<group>"; };
+		39E16DBD22C8AD7100608727 /* genocide_body.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = genocide_body.png; sourceTree = "<group>"; };
+		39E16DBF22C8B46400608727 /* omairi_kimono_woman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = omairi_kimono_woman.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +143,10 @@
 		395772CE22BE278F001F087E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				39E16DBF22C8B46400608727 /* omairi_kimono_woman.png */,
+				39E16DBD22C8AD7100608727 /* genocide_body.png */,
+				39E16DB922C8AAC700608727 /* genocide_l.png */,
+				39E16DBA22C8AAC700608727 /* genocide_r.png */,
 				39E16DAF22C79E5F00608727 /* figure_tekken7_blank2.png */,
 				39E16DAB22C4FEEF00608727 /* result.png */,
 				39E16DA322BFC73400608727 /* punch.mp3 */,
@@ -223,18 +235,22 @@
 				39E16D9C22BFAF9900608727 /* shinnen_aisatsu_woman.png in Resources */,
 				39E16DB022C79E5F00608727 /* figure_tekken7_blank2.png in Resources */,
 				395772EE22BF33F7001F087E /* bg_kaitenzushi_empty.png in Resources */,
+				39E16DBE22C8AD7100608727 /* genocide_body.png in Resources */,
 				39E16DA622C4FC0600608727 /* ResultScene.sks in Resources */,
 				395772B922B7CFD7001F087E /* GameScene.sks in Resources */,
+				39E16DBC22C8AAC700608727 /* genocide_r.png in Resources */,
 				395772DA22BE3D9A001F087E /* fashion_wafuku_woman.png in Resources */,
 				395772DC22BE3DAB001F087E /* gal.png in Resources */,
 				395772C422B7CFD8001F087E /* Assets.xcassets in Resources */,
 				395772E422BE4501001F087E /* TitleScene.sks in Resources */,
 				395772C722B7CFD8001F087E /* LaunchScreen.storyboard in Resources */,
 				39E16DA022BFB2EF00608727 /* Crush.sks in Resources */,
+				39E16DBB22C8AAC700608727 /* genocide_l.png in Resources */,
 				395772DE22BE3DB3001F087E /* ganguro_gal.png in Resources */,
 				395772E022BE413B001F087E /* figure_tekken1_seigi2.png in Resources */,
 				39E16DA422BFC73400608727 /* punch.mp3 in Resources */,
 				39E16DB622C868BA00608727 /* ProgressPassShader.fsh in Resources */,
+				39E16DC022C8B46400608727 /* omairi_kimono_woman.png in Resources */,
 				395772E822BE499C001F087E /* tap_to_start.png in Resources */,
 				39E16DAC22C4FEEF00608727 /* result.png in Resources */,
 				395772D022BE3CC7001F087E /* animal_gorilla.png in Resources */,
