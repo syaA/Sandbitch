@@ -146,7 +146,32 @@ class GameScene: SKScene {
         self.skill_genocide?.zPosition = 10
         self.skill_genocide?.interval = 10.0
         self.skill_genocide?.onTriggered = {
-            
+            self.hammer!.run(SKAction.moveBy(x: 0, y:200, duration: 0.5))
+            self.genocide_body!.alpha = 1
+            self.genocide_l!.alpha = 1
+            self.genocide_l!.zPosition = -15
+            self.genocide_r!.alpha = 1
+            self.genocide_r!.zPosition = -15
+            self.genocide_body!.position.y = 11 - 600
+            self.genocide_body!.run(
+                SKAction.sequence([SKAction.moveBy(x: 0, y: 600, duration: 3.0),
+                                   SKAction.wait(forDuration: 1.0)])) {
+                                    self.genocide_l!.run(SKAction.moveBy(x: 400, y: 0, duration: 1)) {
+                                        self.genocide_l!.zPosition = 16
+                                        self.genocide_l!.run(SKAction.moveBy(x: -400, y: 0, duration: 1))
+                                    }
+                                    self.genocide_r!.run(SKAction.moveBy(x: -400, y: 0, duration: 1)) {
+                                        self.genocide_r!.zPosition = 16
+                                        self.genocide_r!.run(SKAction.moveBy(x: 400, y: 0, duration: 1)) {
+                                            self.genocide_body!.run(SKAction.sequence(
+                                                [SKAction.wait(forDuration: 1.0),
+                                                 SKAction.moveBy(x: 0, y: -600, duration: 3)]))
+                                            self.hammer!.run(
+                                                SKAction.sequence([SKAction.wait(forDuration: 3.0),
+                                                                   SKAction.moveBy(x: 0, y: -200, duration: 0.5)]))
+                                        }
+                                    }
+            }
         }
         self.addChild(self.skill_genocide!)
     }
