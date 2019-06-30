@@ -30,6 +30,10 @@ class GameScene: SKScene {
     private var crush : SKAction?
     private var crush_effect : SKEmitterNode?
     
+    private var genocide_body : SKSpriteNode?
+    private var genocide_l : SKSpriteNode?
+    private var genocide_r : SKSpriteNode?
+    
     private var gal_a : SKSpriteNode?
     private var gal_b : SKSpriteNode?
     private var gal_c : SKSpriteNode?
@@ -41,8 +45,11 @@ class GameScene: SKScene {
     private var gals : [SKSpriteNode] = []
     private var prev_gal_time : TimeInterval = 0
     private var hammer_attacking : Bool = false
+    private var in_genocide : Bool = false
+    private var genocide_attaking : Bool = false
     
     private var skill_main : SkillButtonNode?
+    private var skill_genocide : SkillButtonNode?
     
     private var score = 0
     private let startTime = Date()
@@ -86,6 +93,15 @@ class GameScene: SKScene {
                                         SKAction.moveBy(x: 0, y: 150, duration: 2.0)])
         self.crush!.speed = 2
         self.crush_effect = SKEmitterNode(fileNamed: "Crush")
+        
+        // ジェノサイド
+        self.genocide_body = self.childNode(withName: "genocide_body") as? SKSpriteNode
+        self.genocide_l = self.genocide_body!.childNode(withName: "genocide_l") as? SKSpriteNode
+        self.genocide_r = self.genocide_body!.childNode(withName: "genocide_r") as? SKSpriteNode
+        self.genocide_body!.alpha = 0
+        self.genocide_l!.alpha = 0
+        self.genocide_r!.alpha = 0
+        
         //　ギャル
         self.gal_a = self.childNode(withName: "//gal_a") as? SKSpriteNode
         self.gal_a?.childNode(withName: "damage")?.alpha = 0
@@ -117,13 +133,64 @@ class GameScene: SKScene {
         self.skill_main?.zPosition = 10
         self.skill_main?.interval = 2.1
         self.skill_main?.onTriggered = {
-            // メインスキルボタンでハンマーを動かす
-            if let hammer = self.hammer {
-                hammer.removeAllActions()
-                hammer.run(self.crush!)
+            if !self.in_genocide {
+                // メインスキルボタンでハンマーを動かす
+                if let hammer = self.hammer {
+                    hammer.removeAllActions()
+                    hammer.run(self.crush!)
+                }
             }
         }
         self.addChild(self.skill_main!)
+        
+        self.skill_genocide = SkillButtonNode(
+            texture: SKTexture(imageNamed: "omairi_kimono_woman.png"),
+            size: CGSize(width: 40, height: 40))
+        self.skill_genocide?.position = CGPoint(x:208, y:-22)
+        self.skill_genocide?.zPosition = 10
+        self.skill_genocide?.interval = 25.0
+        self.skill_genocide?.onTriggered = {
+            self.in_genocide = true
+            self.belt!.isPaused = true
+            for g in self.gals {
+                g.isPaused = true
+            }
+            self.hammer!.run(SKAction.moveBy(x: 0, y:200, duration: 0.5))
+            self.genocide_body!.alpha = 1
+            self.genocide_l!.alpha = 1
+            self.genocide_l!.zPosition = -15
+            self.genocide_r!.alpha = 1
+            self.genocide_r!.zPosition = -15
+            self.genocide_body!.position.y = 11 - 600
+            self.genocide_body!.run(
+                SKAction.sequence([SKAction.moveBy(x: 0, y: 600, duration: 3.0),
+                                   SKAction.wait(forDuration: 1.0)])) {
+                                    self.genocide_l!.run(SKAction.moveBy(x: 400, y: 0, duration: 1)) {
+                                        self.genocide_l!.zPosition = 16
+                                        self.genocide_attaking = true
+                                        self.genocide_l!.run(SKAction.moveBy(x: -400, y: 0, duration: 1))
+                                    }
+                                    self.genocide_r!.run(SKAction.moveBy(x: -400, y: 0, duration: 1)) {
+                                        self.genocide_r!.zPosition = 16
+                                        self.genocide_r!.run(SKAction.moveBy(x: 400, y: 0, duration: 1)) {
+                                            self.genocide_attaking = false
+                                            self.genocide_body!.run(SKAction.sequence(
+                                                [SKAction.wait(forDuration: 1.0),
+                                                 SKAction.moveBy(x: 0, y: -600, duration: 3)]))
+                                            self.hammer!.run(
+                                                SKAction.sequence([SKAction.wait(forDuration: 3.0),
+                                                                   SKAction.moveBy(x: 0, y: -200, duration: 0.5)])) {
+                                                                    self.in_genocide = false
+                                                                    self.belt!.isPaused = false
+                                                                    for g in self.gals {
+                                                                        g.isPaused = false
+                                                                    }
+                                            }
+                                        }
+                                    }
+            }
+        }
+        self.addChild(self.skill_genocide!)
     }
     
     
@@ -184,7 +251,7 @@ class GameScene: SKScene {
             }
         }
         // 一定時間ごとにギャル生成
-        if (currentTime - prev_gal_time) > TimeInterval.random(in: 0.2...1.0) {
+        if !in_genocide && ((currentTime - prev_gal_time) > TimeInterval.random(in: 0.2...1.0)) {
             let type = Int.random(in: 0...10)
             let gal_base : SKSpriteNode?
             switch type {
@@ -206,36 +273,59 @@ class GameScene: SKScene {
         }
         
         // 画面から出て行ったギャルは消す
-        for (i, gal) in gals.enumerated() {
+        for gal in self.gals {
             if gal.position.x < -500 {
                 gal.removeFromParent()
-                gals.remove(at: i)  // ここは怪しい。ループ中に要素消して大丈夫か？
             }
         }
+        self.gals = self.gals.filter { $0.position.x >= -500 }
         
         // 当たり判定
-        if self.hammer_attacking {
+        if self.hammer_attacking || self.genocide_attaking {
             for gal in gals {
                 // 点数が０なら既に処理済みなので何もしない
                 var score = gal.userData?["score"] as! Int
-                if (score != 0) && self.hammer_attack!.intersects(gal.childNode(withName: "damage")!) {
-                    // 当たったら、スクロールを止めて潰れるアニメの後にスクロール再開する
+                if (score != 0) &&
+                    (self.hammer_attack!.intersects(gal.childNode(withName: "damage")!) ||
+                        self.genocide_l!.intersects(gal.childNode(withName: "damage")!) ||
+                            self.genocide_r!.intersects(gal.childNode(withName: "damage")!)){
                     gal.removeAllActions()
-                    let eff = self.crush_effect!.copy() as! SKEmitterNode
-                    eff.zPosition = 20
-                    gal.addChild(eff)
-                    gal.run(SKAction.group([self.collapse!,
-                                            SKAction.playSoundFileNamed("gutya", waitForCompletion: false),
-                                            SKAction.sequence([SKAction.wait(forDuration: 0.1),
-                                                               SKAction.customAction(withDuration: 0.1) {
-                                                                n, t in
-                                                                eff.particleBirthRate = 0
-                                                                eff.particleSpeed = 100
-                                                }])])) {
-                        gal.run(SKAction.repeatForever(self.scroll!))
+                    if self.hammer_attacking {
+                        // 当たったら、スクロールを止めて潰れるアニメの後にスクロール再開する
+                        let eff = self.crush_effect!.copy() as! SKEmitterNode
+                        eff.zPosition = 20
+                        gal.addChild(eff)
+                        gal.run(SKAction.group([self.collapse!,
+                                                SKAction.playSoundFileNamed("gutya", waitForCompletion: false),
+                                                SKAction.sequence([SKAction.wait(forDuration: 0.1),
+                                                                   SKAction.customAction(withDuration: 0.1) {
+                                                                    n, t in
+                                                                    eff.particleBirthRate = 0
+                                                                    eff.particleSpeed = 100
+                                                    }])])) {
+                                                        gal.run(SKAction.repeatForever(self.scroll!))
+                        }
+                    } else {
+                        gal.isPaused = false
+                        if self.genocide_l!.intersects(gal.childNode(withName: "damage")!) {
+                            gal.move(toParent: self.genocide_l!)
+                        } else {
+                            gal.move(toParent: self.genocide_r!)
+                        }
+                        let eff = self.crush_effect!.copy() as! SKEmitterNode
+                        eff.zPosition = 20
+                        eff.particlePositionRange = CGVector(dx: 10, dy: 180)
+                        gal.addChild(eff)
+                        gal.run(SKAction.group([SKAction.resize(toWidth: 0, duration: 0.2),
+                                                SKAction.playSoundFileNamed("gutya", waitForCompletion: false)])) {
+                            gal.removeFromParent()
+                            if let i = self.gals.firstIndex(of: gal) {
+                                self.gals.remove(at: i)
+                            }
+                        }
                     }
                     //　拳の中心と近いほど点数が高い
-                    if score > 0 {
+                    if (score > 0) && !self.genocide_attaking {
                         let scale = 1 - abs((self.hammer!.position.x - gal.position.x)) / self.hammer!.size.width
                         score = Int(CGFloat(score) * scale)
                     }
@@ -270,6 +360,7 @@ class GameScene: SKScene {
         }
         
         self.skill_main?.update(currentTime)
+        self.skill_genocide?.update(currentTime)
         
         if self.debug {
             if let hammer = self.hammer {

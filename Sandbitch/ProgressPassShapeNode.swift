@@ -14,7 +14,7 @@ import GameplayKit
 // SpriteKit のバグ?
 // https://stackoverflow.com/questions/50885130/spritekit-issue-with-skshader-animation-in-swift
 class ProgressPassShapeNode : SKShapeNode {
-    static let shader : SKShader = {
+    let shader : SKShader = {
         let shader = SKShader(fileNamed: "ProgressPassShader.fsh")
         /*
         shader.attributes = [
@@ -34,7 +34,7 @@ class ProgressPassShapeNode : SKShapeNode {
     }
     
     func setupShader() {
-        self.strokeShader = ProgressPassShapeNode.shader
+        self.strokeShader = shader
     }
     override init() {
         super.init()
