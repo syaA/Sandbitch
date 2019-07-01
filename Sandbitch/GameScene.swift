@@ -153,7 +153,7 @@ class GameScene: SKScene {
             size: CGSize(width: 40, height: 40))
         self.skill_genocide?.position = CGPoint(x:208, y:-22)
         self.skill_genocide?.zPosition = 10
-        self.skill_genocide?.interval = 5.0
+        self.skill_genocide?.interval = 25.0
         self.skill_genocide?.onTriggered = {
             self.in_genocide = true
             self.genocide_success = true
