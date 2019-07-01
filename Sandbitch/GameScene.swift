@@ -33,6 +33,7 @@ class GameScene: SKScene {
     private var genocide_body : SKSpriteNode?
     private var genocide_l : SKSpriteNode?
     private var genocide_r : SKSpriteNode?
+    private var genocide_font : SKSpriteNode?
     
     private var gal_a : SKSpriteNode?
     private var gal_b : SKSpriteNode?
@@ -47,6 +48,8 @@ class GameScene: SKScene {
     private var hammer_attacking : Bool = false
     private var in_genocide : Bool = false
     private var genocide_attaking : Bool = false
+    private var genocide_success : Bool = false
+    private var genocide_score = 0
     
     private var skill_main : SkillButtonNode?
     private var skill_genocide : SkillButtonNode?
@@ -98,9 +101,11 @@ class GameScene: SKScene {
         self.genocide_body = self.childNode(withName: "genocide_body") as? SKSpriteNode
         self.genocide_l = self.genocide_body!.childNode(withName: "genocide_l") as? SKSpriteNode
         self.genocide_r = self.genocide_body!.childNode(withName: "genocide_r") as? SKSpriteNode
+        self.genocide_font = self.childNode(withName: "genocide") as? SKSpriteNode
         self.genocide_body!.alpha = 0
         self.genocide_l!.alpha = 0
         self.genocide_r!.alpha = 0
+        self.genocide_font!.alpha = 0
         
         //　ギャル
         self.gal_a = self.childNode(withName: "//gal_a") as? SKSpriteNode
@@ -148,9 +153,11 @@ class GameScene: SKScene {
             size: CGSize(width: 40, height: 40))
         self.skill_genocide?.position = CGPoint(x:208, y:-22)
         self.skill_genocide?.zPosition = 10
-        self.skill_genocide?.interval = 25.0
+        self.skill_genocide?.interval = 5.0
         self.skill_genocide?.onTriggered = {
             self.in_genocide = true
+            self.genocide_success = true
+            self.genocide_score = 0
             self.belt!.isPaused = true
             for g in self.gals {
                 g.isPaused = true
@@ -175,6 +182,34 @@ class GameScene: SKScene {
                                         self.genocide_r!.zPosition = 16
                                         self.genocide_r!.run(SKAction.moveBy(x: 400, y: 0, duration: 1)) {
                                             self.genocide_attaking = false
+                                            if self.genocide_success {
+                                                let genocide_font = self.genocide_font!.copy() as! SKSpriteNode
+                                                genocide_font.position = self.genocide_body!.position
+                                                genocide_font.alpha = 1
+                                                self.addChild(genocide_font)
+                                                genocide_font.run(SKAction.group([
+                                                    SKAction.playSoundFileNamed("genocide.mp3", waitForCompletion: false),
+                                                    SKAction(named: "Flow")!])) {
+                                                        genocide_font.removeFromParent()
+                                                        self.score += self.genocide_score
+                                                        self.result.score = self.score
+                                                        // スコアを表示
+                                                        let flow_score = SKLabelNode()
+                                                        flow_score.position = self.genocide_body!.position
+                                                        flow_score.zPosition = 15
+                                                        let attr : [NSAttributedString.Key : Any] = [
+                                                            .font : UIFont.systemFont(ofSize: 24),
+                                                            .foregroundColor : UIColor.white,
+                                                            .strokeColor : UIColor.black,
+                                                            .strokeWidth : -3.0,
+                                                        ]
+                                                        flow_score.attributedText = NSAttributedString(string: "\(self.genocide_score)", attributes: attr)
+                                                        flow_score.run(SKAction(named: "Flow")!) {
+                                                            flow_score.removeFromParent()
+                                                        }
+                                                        self.addChild(flow_score)
+                                                }
+                                            }
                                             self.genocide_body!.run(SKAction.sequence(
                                                 [SKAction.wait(forDuration: 1.0),
                                                  SKAction.moveBy(x: 0, y: -600, duration: 3)]))
@@ -306,7 +341,12 @@ class GameScene: SKScene {
                                                     }])])) {
                                                         gal.run(SKAction.repeatForever(self.scroll!))
                         }
-                    } else {
+                    } else if self.in_genocide {
+                        if score < 0 {
+                            self.genocide_success = false
+                        } else {
+                            self.genocide_score += score
+                        }
                         gal.isPaused = false
                         if self.genocide_l!.intersects(gal.childNode(withName: "damage")!) {
                             gal.move(toParent: self.genocide_l!)

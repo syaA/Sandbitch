@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		391513EE22C8D57F00E67286 /* gogogo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 391513ED22C8D57F00E67286 /* gogogo.mp3 */; };
+		391513F122CA571A00E67286 /* genocide.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 391513EF22CA571A00E67286 /* genocide.mp3 */; };
+		391513F222CA571A00E67286 /* genocide.png in Resources */ = {isa = PBXBuildFile; fileRef = 391513F022CA571A00E67286 /* genocide.png */; };
 		395772B722B7CFD7001F087E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395772B622B7CFD7001F087E /* AppDelegate.swift */; };
 		395772B922B7CFD7001F087E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 395772B822B7CFD7001F087E /* GameScene.sks */; };
 		395772BB22B7CFD7001F087E /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 395772BA22B7CFD7001F087E /* Actions.sks */; };
@@ -49,6 +51,8 @@
 
 /* Begin PBXFileReference section */
 		391513ED22C8D57F00E67286 /* gogogo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gogogo.mp3; sourceTree = "<group>"; };
+		391513EF22CA571A00E67286 /* genocide.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = genocide.mp3; sourceTree = "<group>"; };
+		391513F022CA571A00E67286 /* genocide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = genocide.png; sourceTree = "<group>"; };
 		395772B322B7CFD7001F087E /* Sandbitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sandbitch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		395772B622B7CFD7001F087E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		395772B822B7CFD7001F087E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -145,6 +149,8 @@
 		395772CE22BE278F001F087E /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				391513EF22CA571A00E67286 /* genocide.mp3 */,
+				391513F022CA571A00E67286 /* genocide.png */,
 				391513ED22C8D57F00E67286 /* gogogo.mp3 */,
 				39E16DBF22C8B46400608727 /* omairi_kimono_woman.png */,
 				39E16DBD22C8AD7100608727 /* genocide_body.png */,
@@ -237,6 +243,7 @@
 				395772E622BE4672001F087E /* title_logo.png in Resources */,
 				39E16D9C22BFAF9900608727 /* shinnen_aisatsu_woman.png in Resources */,
 				39E16DB022C79E5F00608727 /* figure_tekken7_blank2.png in Resources */,
+				391513F122CA571A00E67286 /* genocide.mp3 in Resources */,
 				395772EE22BF33F7001F087E /* bg_kaitenzushi_empty.png in Resources */,
 				39E16DBE22C8AD7100608727 /* genocide_body.png in Resources */,
 				39E16DA622C4FC0600608727 /* ResultScene.sks in Resources */,
@@ -258,6 +265,7 @@
 				39E16DAC22C4FEEF00608727 /* result.png in Resources */,
 				391513EE22C8D57F00E67286 /* gogogo.mp3 in Resources */,
 				395772D022BE3CC7001F087E /* animal_gorilla.png in Resources */,
+				391513F222CA571A00E67286 /* genocide.png in Resources */,
 				395772BB22B7CFD7001F087E /* Actions.sks in Resources */,
 				395772D822BE3D88001F087E /* cooking_nikutataki.png in Resources */,
 			);
