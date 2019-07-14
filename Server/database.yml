@@ -1,0 +1,14 @@
+db:
+  production:
+    adapter:  mysql2
+    host: localhost
+    username: <%= ENV['SANDBITCH_DB_USER'] %>
+    password: <%= ENV['SANDBITCH_DB_PASS'] %>
+    database: <%= ENV['SANDBITCH_DB'] %>
+
+  development:
+    adapter:  mysql2
+    host: localhost
+    username: <%= ENV['SANDBITCH_DEV_DB_USER'] %>
+    password: <%= ENV['SANDBITCH_DEV_DB_PASS'] %>
+    database: <%= ENV['SANDBITCH_DEV_DB'] %>
