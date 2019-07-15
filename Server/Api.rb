@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 # coding: utf-8
 
 require 'rubygems'
@@ -26,11 +27,16 @@ def User.find_user(uuid)
   end
 end
 
+Key = ENV['SANDBITCH_DEV_API_KEY']
+
 before do
   content_type :json
 end
 
 post '/user' do
+  request.body.rewind
+  payload = JSON.parse(request.body.read)
+  return 403 if payload['key'] != Key
   uuid = SecureRandom.uuid.gsub('-', '').scan(/.{2}/).map{|x| x.to_i(16)}
   User.create(uuid: uuid.pack('C*'))
   {'uuid' => uuid}.to_json
@@ -45,14 +51,17 @@ get '/user/:uuid/score' do
   end
 end
 
-put '/user/:uuid/score/:score' do
+put '/user/:uuid/score' do
+  request.body.rewind
+  payload = JSON.parse(request.body.read)
+  return 403 if payload['key'] != Key
   user = User.find_user(params[:uuid])
   if user.nil?
     404
   else
-    score = params[:score].to_i
+    score = payload['score'].to_i
     if user.score < score
-      user.update(score: params[:score].to_i)
+      user.update(score: score)
     else
       score = user.score
     end
@@ -60,12 +69,15 @@ put '/user/:uuid/score/:score' do
   end
 end
 
-put '/user/:uuid/name/:name' do
+put '/user/:uuid/name' do
+  request.body.rewind
+  payload = JSON.parse(request.body.read)
+  return 403 if payload['key'] != Key
   user = User.find_user(params[:uuid])
   if user.nil?
     404
   else
-    name = params[:name].gsub(/[(\r\n?)\\]/, "")[0, 20]
+    name = payload['name'].gsub(/[(\r\n?)\\]/, "")[0, 20]
     user.update(name: name)
     {'name' => name}.to_json
   end
