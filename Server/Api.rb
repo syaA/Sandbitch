@@ -83,8 +83,14 @@ put '/user/:uuid/name' do
   end
 end
 
-get '/ranking/:top' do
-
+get '/ranking/:num' do
+  num = [params[:num].to_i, 100].min
+  users = User.order(score: :desc).limit(num)
+  result = []
+  users.each { |user|
+    result << { 'name' => user.name, 'score' => user.score}
+  }
+  result.to_json
 end
 
 get '/test/randomUser/:num' do
