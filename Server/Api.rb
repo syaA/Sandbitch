@@ -17,7 +17,7 @@ end
 User.connection # これ要る。
 
 def User.find_user(uuid)
-  return nil if uuid =~ /¥A[0-9a-fA-F]{16}¥Z/
+  return nil unless uuid =~ /\A[0-9a-fA-F]{32}\Z/
   user = User.where(%Q!uuid=unhex("#{uuid}")!)
   unless user.empty?
     user[0]
