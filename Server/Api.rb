@@ -69,6 +69,22 @@ put '/user/:uuid/score' do
   end
 end
 
+get '/user/:uuid/ranking' do
+  user = User.find_user(params[:uuid])
+  if user.nil?
+    404
+  else
+    users = User.order(score: :desc).limit(100)
+    ranking = -1
+    users.each.with_index { |other, idx|
+      if other.id == user.id
+        ranking = idx
+      end
+    }
+    {'ranking' => ranking}.to_json
+  end
+end
+
 put '/user/:uuid/name' do
   request.body.rewind
   payload = JSON.parse(request.body.read)
